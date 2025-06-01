@@ -1,0 +1,18 @@
+Calendar = 
+    ADDCOLUMNS(
+        CALENDAR(date(2023,03,01),max("Columna Fecha de tu BD")),
+        "Year", YEAR([Date]),
+        "Quarter #", CEILING(MONTH([Date])/3,1),
+        "Quarter", "Q" & FORMAT(CEILING(MONTH([Date])/3,1), "#"),
+        "Month", MONTH([Date]),
+        "Month Name", UPPER(LEFT(FORMAT([Date], "MMMM"), 1)) & LOWER(MID(FORMAT([Date], "MMMM"), 2, LEN(FORMAT([Date], "MMMM")) - 1)),
+        "Week #", WEEKNUM([Date]),
+        "Day", DAY([Date]),
+         "N.Día-·Día",UPPER(LEFT(FORMAT([Date], "DDDD"), 1)) & LOWER(MID(FORMAT([Date], "DDDD"),2,2)) & "-" & DAY([Date]), 
+        "Mes-Año", UPPER(LEFT(FORMAT([Date], "MMM"), 1)) & LOWER(MID(FORMAT([Date], "MMM"), 2, 2)) & "-" & FORMAT([Date], "yy"),
+        "Week Day", WEEKDAY([Date],2),
+        "Mes-peq", UPPER(LEFT(FORMAT([Date], "MMM"), 1)) & LOWER(MID(FORMAT([Date], "MMM"), 2, 2)),
+        "Day Name", UPPER(LEFT(FORMAT([Date], "dddd"), 1)) & LOWER(MID(FORMAT([Date], "dddd"), 2, LEN(FORMAT([Date], "dddd")) - 1)),
+        "Especial" ,YEAR([Date]) & " " & UPPER(LEFT(FORMAT([Date], "DDDD"), 1)) & LOWER(MID(FORMAT([Date], "DDDD"),2,2)) & "-" & DAY([Date]),
+        "MesAñoOrden", FORMAT( [Date], "YYYYMM" )
+    )
