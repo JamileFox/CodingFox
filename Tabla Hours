@@ -1,0 +1,35 @@
+Hours = 
+ADDCOLUMNS(
+    GENERATESERIES(0, 23, 1),
+    "Hora Texto", FORMAT(TIME([Value], 0, 0), "hh:mm AM/PM"),
+    "Hora 24h", FORMAT(TIME([Value], 0, 0), "HH:mm"),
+    "Tramo Horario", 
+        SWITCH(
+            TRUE(),
+            [Value] >= 0 && [Value] < 6, "Madrugada",
+            [Value] >= 6 && [Value] < 12, "Mañana",
+            [Value] >= 12 && [Value] < 18, "Tarde",
+            "Noche"
+        ),
+    "Turno", 
+        SWITCH(
+            TRUE(),
+            [Value] >= 6 && [Value] < 14, "Turno Mañana",
+            [Value] >= 14 && [Value] < 22, "Turno Tarde",
+            "Turno Noche"
+        ),
+    "Horario Laboral", IF([Value] >= 8 && [Value] < 18, "Sí", "No"),
+    "Bloque 2h", [Value] - MOD([Value], 2) & ":00 - " & ([Value] - MOD([Value], 2) + 1) & ":59",
+    "Hora Pico Estimada", 
+        SWITCH(TRUE(),
+            [Value] IN {10,11,12,18,19,20}, "Alta",
+            [Value] IN {8,9,13,14,17,21}, "Media",
+            "Baja"
+        ),
+    "Probabilidad de Conversión", 
+        SWITCH(TRUE(),
+            [Value] IN {11,12,19,20}, "Alta",
+            [Value] IN {9,10,18}, "Media",
+            "Baja"
+        )
+)
